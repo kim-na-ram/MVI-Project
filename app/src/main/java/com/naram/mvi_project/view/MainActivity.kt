@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.onEach
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), IView<MovieState, MovieSideEffect> {
     companion object {
-        private val TAG = this::class.java.name
+        private val TAG = MainActivity::class.java.name
     }
 
     private val mainVm: MainViewModel by viewModels()

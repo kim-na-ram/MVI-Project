@@ -35,7 +35,6 @@ class MainViewModel
     val navigation = _navigation
 
     val keyword = ObservableField("")
-    private var query: String? = null
 
     init {
         intentConsumer()

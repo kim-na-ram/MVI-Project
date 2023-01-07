@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -20,6 +21,14 @@ internal object ApiModule {
     @Singleton
     fun providesOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder().apply {
+            addInterceptor(Interceptor {
+                    val request = it.request()
+                        .newBuilder()
+                        .addHeader("X-Naver-Client-Id", CLIEND_ID)
+                        .addHeader("X-Naver-Client-Secret", CLIENT_SECRET)
+                        .build()
+                    return@Interceptor it.proceed(request)
+            })
             addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
