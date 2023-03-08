@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity(), IView<MovieState, MovieSideEffect> {
     }
 
     private fun initObserver() {
+        // ViewModel 에서 들어오는 state 를 observe 해서 render
         mainVm.state.observe(this) {
             render(it)
         }

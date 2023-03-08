@@ -42,6 +42,8 @@ class MainViewModel
 
     private fun intentConsumer() {
         viewModelScope.launch {
+            // intent 를 collect
+            // 해당 intent 가 무엇인지에 따라 state 를 업데이트 or side effect 처리
             intents.consumeAsFlow().collect { userIntent ->
                 when(userIntent) {
                     MovieIntent.SearchMovie -> fetchData()
@@ -108,11 +110,13 @@ class MainViewModel
     */
 
     private suspend fun updateState(handler: suspend (intent: MovieState) -> MovieState) {
+        // 새로 만든 state 로 View 를 갱신
         _state.postValue(handler(state.value!!))
     }
 
     fun searchBtnOnClicked() {
         viewModelScope.launch {
+            // 사용자의 action 을 intent 로 send
             intents.send(MovieIntent.SearchMovie)
         }
     }
